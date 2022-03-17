@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import * as S from './List.style';
 import Remittance from './Remittance';
 import { useSelect } from '../../../hooks/useSelect';
@@ -10,7 +10,17 @@ const KOREAN_EXCHANGERATE = 'KRW';
 const USA_EXCHANGERATE = 'USD';
 
 const List = () => {
+  const [exchangeRate, setExchangeRate] = useState();
   const [selectCountry, select] = useSelect();
+
+  useEffect(() => {
+    fetch(
+      'http://api.currencylayer.com/live?access_key=9f1b7f8ab5d825f9ebd5228073102aa6'
+    )
+      .then(res => res.json())
+      .then(res => setExchangeRate(res));
+  }, []);
+  console.log(exchangeRate);
   return (
     <S.List>
       <S.ListTitle>
