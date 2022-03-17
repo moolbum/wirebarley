@@ -1,7 +1,8 @@
+import Remittance from './List/Remittance';
 import {
   RemittanceCountry,
   RecipientCountry,
-} from './SelectCountry/SelectCountry';
+} from './List/SelectCountry/SelectCountry';
 
 export const listData = [
   {
@@ -22,6 +23,6 @@ export const listData = [
   {
     id: 3,
     title: '송금액: ',
-    option: '',
+    option: <Remittance />,
   },
 ];
