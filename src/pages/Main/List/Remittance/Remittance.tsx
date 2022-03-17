@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import * as S from './Remittance.style';
 
-const Remittance = () => {
+const Remittance = ({ remittanc }: { remittanc: string }) => {
   const [remittance, setRemittance] = useState<string>();
   const remittanceValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -9,7 +9,12 @@ const Remittance = () => {
     setRemittance(numberRegExr);
   };
 
-  return <S.Remittance value={remittance || ''} onChange={remittanceValue} />;
+  return (
+    <>
+      <S.Remittance value={remittance || ''} onChange={remittanceValue} />
+      <span>{remittanc || 'USD'}</span>
+    </>
+  );
 };
 
 export default Remittance;
