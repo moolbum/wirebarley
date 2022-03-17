@@ -11,7 +11,14 @@ const USA_EXCHANGERATE = 'USD';
 
 interface ExchangeRate {
   success: boolean;
-  quotes: { USDAUD: number; USDKRW: number; USDJPY: number; USDPHP: number };
+  quotes:
+    | {
+        USDAUD: number;
+        USDKRW: number;
+        USDJPY: number;
+        USDPHP: number;
+      }
+    | any;
   source: string;
   terms: string;
   timestamp: number;
@@ -36,26 +43,36 @@ const List = () => {
         송금국가:
         <S.Select name={REMITTANCE_COUNTRY} onChange={selectCountry}>
           {remittanceData.map(data => {
-            return <S.Option key={data.id}>{data.country}</S.Option>;
+            return (
+              <S.Option key={data.id} value={data.value}>
+                {data.country}
+              </S.Option>
+            );
           })}
         </S.Select>
       </S.ListTitle>
-
       <S.ListTitle>
         수취국가:
         <S.Select name={RECIPIENT_COUNTRY} onChange={selectCountry}>
           {recipientData.map(data => {
-            return <S.Option key={data.id}>{data.country}</S.Option>;
+            return (
+              <S.Option key={data.id} value={data.value}>
+                {data.country}
+              </S.Option>
+            );
           })}
         </S.Select>
       </S.ListTitle>
 
       <S.ListTitle>
-        환율: {exchangeRate?.quotes.USDAUD} &nbsp;
+        환율:&nbsp;
+        {exchangeRate?.quotes[select.value]
+          ? exchangeRate?.quotes[select.value]
+          : exchangeRate?.quotes.USDKRW}
+        &nbsp;
         {select.recipientCountry || KOREAN_EXCHANGERATE}/
         {select.remittanceCountry || USA_EXCHANGERATE}
       </S.ListTitle>
-
       <S.ListTitle>
         송금액: <Remittance remittanc={select.remittanceCountry} />
       </S.ListTitle>
