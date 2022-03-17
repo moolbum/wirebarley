@@ -9,8 +9,17 @@ const RECIPIENT_COUNTRY = 'recipientCountry';
 const KOREAN_EXCHANGERATE = 'KRW';
 const USA_EXCHANGERATE = 'USD';
 
+interface ExchangeRate {
+  success: boolean;
+  quotes: { USDAUD: number; USDKRW: number; USDJPY: number; USDPHP: number };
+  source: string;
+  terms: string;
+  timestamp: number;
+  privacy: string;
+}
+
 const List = () => {
-  const [exchangeRate, setExchangeRate] = useState();
+  const [exchangeRate, setExchangeRate] = useState<ExchangeRate>();
   const [selectCountry, select] = useSelect();
 
   useEffect(() => {
@@ -20,7 +29,7 @@ const List = () => {
       .then(res => res.json())
       .then(res => setExchangeRate(res));
   }, []);
-  console.log(exchangeRate);
+
   return (
     <S.List>
       <S.ListTitle>
@@ -42,7 +51,8 @@ const List = () => {
       </S.ListTitle>
 
       <S.ListTitle>
-        환율: {select.recipientCountry || KOREAN_EXCHANGERATE}/
+        환율: {exchangeRate?.quotes.USDAUD} &nbsp;
+        {select.recipientCountry || KOREAN_EXCHANGERATE}/
         {select.remittanceCountry || USA_EXCHANGERATE}
       </S.ListTitle>
 

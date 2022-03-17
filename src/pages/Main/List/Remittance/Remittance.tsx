@@ -12,7 +12,7 @@ const Remittance = ({ remittanc }: { remittanc: string }) => {
   return (
     <>
       <S.Remittance value={remittance || ''} onChange={remittanceValue} />
-      <span>{remittanc || 'USD'}</span>
+      &nbsp; <span>{remittanc || 'USD'}</span>
     </>
   );
 };
