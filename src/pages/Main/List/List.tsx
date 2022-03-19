@@ -67,8 +67,8 @@ const List = () => {
       <S.ListTitle>
         환율:&nbsp;
         {exchangeRate?.quotes[select.value]
-          ? exchangeRate?.quotes[select.value]
-          : exchangeRate?.quotes.USDKRW}
+          ? Number(exchangeRate?.quotes[select.value]).toLocaleString()
+          : Number(exchangeRate?.quotes.USDKRW).toLocaleString()}
         &nbsp;
         {select.recipientCountry || KOREAN_EXCHANGERATE}/
         {select.remittanceCountry || USA_EXCHANGERATE}
