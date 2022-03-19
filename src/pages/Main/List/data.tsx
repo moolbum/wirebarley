@@ -12,11 +12,16 @@ const USDPHP = 'USDPHP';
 export const remittanceData = [
   {
     id: 0,
+    country: '==선택하기==',
+    value: '',
+  },
+  {
+    id: 1,
     country: USD,
     value: USDUSD,
   },
   {
-    id: 1,
+    id: 2,
     country: AUD,
     value: USDAUD,
   },
@@ -25,16 +30,21 @@ export const remittanceData = [
 export const recipientData = [
   {
     id: 0,
+    country: '==선택하기==',
+    value: '',
+  },
+  {
+    id: 1,
     country: KRW,
     value: USDKRW,
   },
   {
-    id: 1,
+    id: 2,
     country: JPY,
     value: USDJPY,
   },
   {
-    id: 2,
+    id: 3,
     country: PHP,
     value: USDPHP,
   },

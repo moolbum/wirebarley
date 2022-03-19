@@ -7,8 +7,6 @@ import { remittanceData, recipientData } from './data';
 
 const REMITTANCE_COUNTRY = 'remittanceCountry';
 const RECIPIENT_COUNTRY = 'recipientCountry';
-const KOREAN_EXCHANGERATE = 'KRW';
-const USA_EXCHANGERATE = 'USD';
 
 interface ExchangeRate {
   success: boolean;
@@ -38,6 +36,8 @@ const List = () => {
       .then(res => setExchangeRate(res));
   }, []);
 
+  const exchangeRateCountry = exchangeRate?.quotes[select.value];
+  console.log('환율진짜', exchangeRate);
   return (
     <S.List>
       <S.ListTitle>
@@ -67,15 +67,17 @@ const List = () => {
 
       <S.ListTitle>
         환율:&nbsp;
-        {exchangeRate?.quotes[select.value]
-          ? Number(exchangeRate?.quotes[select.value]).toLocaleString()
-          : Number(exchangeRate?.quotes.USDKRW).toLocaleString()}
+        {select && exchangeRateCountry}
         &nbsp;
-        {select.recipientCountry || KOREAN_EXCHANGERATE}/
-        {select.remittanceCountry || USA_EXCHANGERATE}
+        {select.recipientCountry}/{select.remittanceCountry}
       </S.ListTitle>
       <S.ListTitle>
-        송금액: <Remittance remittanc={select.remittanceCountry} />
+        송금액:{' '}
+        <Remittance
+          exchangeRate={exchangeRateCountry}
+          remittanc={select.remittanceCountry}
+          recipient={select.recipientCountry}
+        />
       </S.ListTitle>
     </S.List>
   );
