@@ -7,6 +7,8 @@ import { remittanceData, recipientData } from './data';
 
 const REMITTANCE_COUNTRY = 'remittanceCountry';
 const RECIPIENT_COUNTRY = 'recipientCountry';
+const API =
+  'http://api.currencylayer.com/live?access_key=9f1b7f8ab5d825f9ebd5228073102aa6';
 
 interface ExchangeRate {
   success: boolean;
@@ -29,9 +31,7 @@ const List = () => {
   const [selectCountry, select] = useSelect();
 
   useEffect(() => {
-    fetch(
-      'http://api.currencylayer.com/live?access_key=9f1b7f8ab5d825f9ebd5228073102aa6'
-    )
+    fetch(API)
       .then(res => res.json())
       .then(res => setExchangeRate(res));
   }, []);
