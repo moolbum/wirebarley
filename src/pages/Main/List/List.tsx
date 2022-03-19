@@ -4,6 +4,7 @@ import Remittance from './Remittance';
 
 import { useSelect } from '../../../hooks/useSelect';
 import { remittanceData, recipientData } from './data';
+import axios from 'axios';
 
 const REMITTANCE_COUNTRY = 'remittanceCountry';
 const RECIPIENT_COUNTRY = 'recipientCountry';
@@ -31,9 +32,7 @@ const List = () => {
   const [selectCountry, select] = useSelect();
 
   useEffect(() => {
-    fetch(API)
-      .then(res => res.json())
-      .then(res => setExchangeRate(res));
+    axios.get(API).then(res => setExchangeRate(res.data));
   }, []);
 
   const exchangeRateCountry = exchangeRate?.quotes[select.value];
