@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import * as S from './List.style';
 import Remittance from './Remittance';
+
 import { useSelect } from '../../../hooks/useSelect';
 import { remittanceData, recipientData } from './data';
 
