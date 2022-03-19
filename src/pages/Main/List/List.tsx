@@ -37,7 +37,7 @@ const List = () => {
   }, []);
 
   const exchangeRateCountry = exchangeRate?.quotes[select.value];
-  console.log('환율진짜', exchangeRate);
+
   return (
     <S.List>
       <S.ListTitle>
