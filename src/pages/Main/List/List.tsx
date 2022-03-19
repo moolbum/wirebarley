@@ -1,17 +1,23 @@
 import { useState, useEffect } from 'react';
 import * as S from './List.style';
 import Remittance from './Remittance';
+
 import { useSelect } from '../../../hooks/useSelect';
 import { remittanceData, recipientData } from './data';
 
 const REMITTANCE_COUNTRY = 'remittanceCountry';
 const RECIPIENT_COUNTRY = 'recipientCountry';
-const KOREAN_EXCHANGERATE = 'KRW';
-const USA_EXCHANGERATE = 'USD';
 
 interface ExchangeRate {
   success: boolean;
-  quotes: { USDAUD: number; USDKRW: number; USDJPY: number; USDPHP: number };
+  quotes:
+    | {
+        USDAUD: number;
+        USDKRW: number;
+        USDJPY: number;
+        USDPHP: number;
+      }
+    | any;
   source: string;
   terms: string;
   timestamp: number;
@@ -30,34 +36,48 @@ const List = () => {
       .then(res => setExchangeRate(res));
   }, []);
 
+  const exchangeRateCountry = exchangeRate?.quotes[select.value];
+  console.log('환율진짜', exchangeRate);
   return (
     <S.List>
       <S.ListTitle>
         송금국가:
         <S.Select name={REMITTANCE_COUNTRY} onChange={selectCountry}>
           {remittanceData.map(data => {
-            return <S.Option key={data.id}>{data.country}</S.Option>;
+            return (
+              <S.Option key={data.id} value={data.value}>
+                {data.country}
+              </S.Option>
+            );
           })}
         </S.Select>
       </S.ListTitle>
-
       <S.ListTitle>
         수취국가:
         <S.Select name={RECIPIENT_COUNTRY} onChange={selectCountry}>
           {recipientData.map(data => {
-            return <S.Option key={data.id}>{data.country}</S.Option>;
+            return (
+              <S.Option key={data.id} value={data.value}>
+                {data.country}
+              </S.Option>
+            );
           })}
         </S.Select>
       </S.ListTitle>
 
       <S.ListTitle>
-        환율: {exchangeRate?.quotes.USDAUD} &nbsp;
-        {select.recipientCountry || KOREAN_EXCHANGERATE}/
-        {select.remittanceCountry || USA_EXCHANGERATE}
+        환율:&nbsp;
+        {select && exchangeRateCountry}
+        &nbsp;
+        {select.recipientCountry}/{select.remittanceCountry}
       </S.ListTitle>
-
       <S.ListTitle>
-        송금액: <Remittance remittanc={select.remittanceCountry} />
+        송금액:{' '}
+        <Remittance
+          exchangeRate={exchangeRateCountry}
+          remittanc={select.remittanceCountry}
+          recipient={select.recipientCountry}
+        />
       </S.ListTitle>
     </S.List>
   );
